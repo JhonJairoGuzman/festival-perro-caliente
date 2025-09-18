@@ -1,3 +1,46 @@
+// results.js - Actualizado para usar cliente global de Supabase
+
+// Obtener resultados desde Supabase
+async function getResults() {
+    try {
+        const { data, error } = await window.supabaseClient
+            .from('hotdogs')
+            .select('*')
+            .order('votes', { ascending: false });
+
+        if (error) {
+            console.error('Error obteniendo resultados:', error);
+            return [];
+        }
+
+        return data || [];
+    } catch (error) {
+        console.error('Error inesperado:', error);
+        return [];
+    }
+}
+
+// Obtener ganadores (top 3)
+async function getWinners() {
+    try {
+        const { data, error } = await window.supabaseClient
+            .from('hotdogs')
+            .select('*')
+            .order('votes', { ascending: false })
+            .limit(3);
+
+        if (error) {
+            console.error('Error obteniendo ganadores:', error);
+            return [];
+        }
+
+        return data || [];
+    } catch (error) {
+        console.error('Error inesperado:', error);
+        return [];
+    }
+}
+
 // Mostrar resultados de votación
 async function mostrarResultados() {
     const contenedorPerros = document.getElementById('perros-results');
@@ -20,11 +63,11 @@ async function mostrarResultados() {
         console.log('Mostrando resultados para', perros.length, 'participantes');
         
         // Encontrar el máximo de votos para calcular porcentajes
-        const maxVotos = Math.max(...perros.map(p => p.votos || 0), 1);
-        const totalVotos = perros.reduce((sum, perro) => sum + (perro.votos || 0), 0);
+        const maxVotos = Math.max(...perros.map(p => p.votes || 0), 1);
+        const totalVotos = perros.reduce((sum, perro) => sum + (perro.votes || 0), 0);
         
         perros.forEach((perro, index) => {
-            const votos = perro.votos || 0;
+            const votos = perro.votes || 0;
             const porcentaje = maxVotos > 0 ? (votos / maxVotos) * 100 : 0;
             const porcentajeTotal = totalVotos > 0 ? ((votos / totalVotos) * 100) : 0;
             
@@ -61,7 +104,7 @@ async function mostrarResultados() {
                 </div>
                 <div class="result-logo">
                     <img src="${perro.logo}" alt="Logo de ${perro.negocio}" 
-                         onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjUiIGN5PSIyNSIgcj0iMjUiIGZpbGw9IiNmMmY2ZjkiLz48dGV4dCB4PSIyNSIgeT0iMjgiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TEFCTzwvdGV4dD48L3N2Zz4='">
+                         onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjUiIGN5PSIyNSIgcj0iMjUiIGZpbGw9IiNmMmY2ZjkiLz48dGV4dCB4PSIyNSIgeT0iMjgiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1iZGRsZSI+TEFCTzwvdGV4dD48L3N2Zz4='">
                 </div>
             `;
             contenedorPerros.appendChild(item);
@@ -115,10 +158,10 @@ async function mostrarGanadores() {
             return;
         }
         
-        const totalVotos = ganadores.reduce((sum, perro) => sum + (perro.votos || 0), 0);
+        const totalVotos = ganadores.reduce((sum, perro) => sum + (perro.votes || 0), 0);
         
         ganadores.forEach((ganador, index) => {
-            const votos = ganador.votos || 0;
+            const votos = ganador.votes || 0;
             const porcentaje = totalVotos > 0 ? ((votos / totalVotos) * 100) : 0;
             const winnerCard = document.createElement('div');
             winnerCard.className = `winner-card winner-${index + 1}`;
@@ -223,7 +266,7 @@ async function exportarResultados() {
         const csvContent = "data:text/csv;charset=utf-8," 
             + "Puesto,Nombre,Negocio,Votos\n" 
             + perros.map((perro, index) => 
-                `${index + 1},${perro.nombre},${perro.negocio},${perro.votos || 0}`
+                `${index + 1},${perro.nombre},${perro.negocio},${perro.votes || 0}`
             ).join("\n");
         
         const encodedUri = encodeURI(csvContent);
@@ -242,3 +285,9 @@ async function exportarResultados() {
 
 // Añadir función de exportación al global
 window.exportarResultados = exportarResultados;
+
+// Inicializar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('✅ results.js inicializado - Usando cliente global de Supabase');
+    initResults();
+});

@@ -1,3 +1,49 @@
+// comments.js - Actualizado para usar cliente global de Supabase
+
+// Obtener comentarios desde Supabase
+async function getComments() {
+    try {
+        const { data, error } = await window.supabaseClient
+            .from('comments')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) {
+            console.error('Error obteniendo comentarios:', error);
+            return [];
+        }
+
+        return data || [];
+    } catch (error) {
+        console.error('Error inesperado:', error);
+        return [];
+    }
+}
+
+// Guardar comentario en Supabase
+async function saveComment(nombre, comentario) {
+    try {
+        const { error } = await window.supabaseClient
+            .from('comments')
+            .insert([
+                { 
+                    nombre: nombre || 'Anónimo', 
+                    comentario: comentario 
+                }
+            ]);
+
+        if (error) {
+            console.error('Error guardando comentario:', error);
+            return false;
+        }
+
+        return true;
+    } catch (error) {
+        console.error('Error inesperado:', error);
+        return false;
+    }
+}
+
 // Mostrar comentarios
 async function mostrarComentarios() {
     const contenedor = document.getElementById('comments-container');
@@ -15,7 +61,7 @@ async function mostrarComentarios() {
         if (!comentarios || comentarios.length === 0) {
             contenedor.innerHTML = `
                 <div class="no-comments">
-                    <i class="fas fa-comment-slash" style="font-size: 3rem; color: #f9a826; margin-bottom: 1rem;"></i>
+                    <i class="fas fa-comment-slash"></i>
                     <p>No hay comentarios todavía. ¡Sé el primero en comentar!</p>
                 </div>
             `;
@@ -29,7 +75,7 @@ async function mostrarComentarios() {
             elemento.className = 'comment';
             
             // Formatear fecha
-            const fecha = new Date(comentario.creado_en);
+            const fecha = new Date(comentario.created_at);
             const fechaFormateada = fecha.toLocaleString('es-ES', {
                 year: 'numeric',
                 month: 'long',
@@ -147,7 +193,6 @@ function actualizarContadorCaracteres() {
 // Función para dar like a comentarios (opcional)
 async function likeComment(commentId) {
     try {
-        // Aquí podrías implementar funcionalidad de likes si la necesitas
         mostrarNotificacion('¡Gracias por tu like!', 'success');
     } catch (error) {
         console.error('Error al dar like:', error);
@@ -201,7 +246,6 @@ async function initComments() {
 // Función para cargar más comentarios (paginación)
 async function cargarMasComentarios() {
     try {
-        // Aquí podrías implementar paginación si es necesario
         mostrarNotificacion('Cargando más comentarios...', 'info');
         
         // Simular carga adicional
@@ -220,3 +264,9 @@ async function cargarMasComentarios() {
 window.agregarComentario = agregarComentario;
 window.likeComment = likeComment;
 window.cargarMasComentarios = cargarMasComentarios;
+
+// Inicializar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('✅ comments.js inicializado - Usando cliente global de Supabase');
+    initComments();
+});
