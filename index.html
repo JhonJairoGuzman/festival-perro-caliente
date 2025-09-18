@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Festival del Perro Caliente en Planeta Rica - Vota por tu perro caliente favorito del 2 al 5 de Octubre 2025">
+    <meta name="keywords" content="perro caliente, festival, planeta rica, comida, votación, gastronomía">
+    <meta name="author" content="Municipio de Planeta Rica">
+    <meta property="og:title" content="Festival del Perro Caliente - Planeta Rica 2025">
+    <meta property="og:description" content="Vota por tu perro caliente favorito en el festival más delicioso de Planeta Rica">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1619740455993-9e612b1af08a?w=1200&h=630&fit=crop">
+    <meta property="og:url" content="https://festivalperrocaliente.planetarica.gov.co">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>2 Festival del Perro Caliente - Planeta Rica 2025</title>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌭</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    
+    <!-- Estilos divididos -->
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/navigation.css">
+    <link rel="stylesheet" href="styles/cards.css">
+    <link rel="stylesheet" href="styles/results.css">
+    <link rel="stylesheet" href="styles/winners.css">
+    <link rel="stylesheet" href="styles/comments.css">
+    <link rel="stylesheet" href="styles/sponsors.css">
+    <link rel="stylesheet" href="styles/info.css">
+    <link rel="stylesheet" href="styles/footer.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+</head>
+<body>
+<!-- Header -->
+<header>
+    <div class="header-container">
+        <div class="header-content">
+            <div class="logo">
+                <img src="img/fecha.png" alt="2 Festival del Perro Caliente - Planeta Rica • 2-5 de Octubre 2025" class="logo-image">
+            </div>
+            <div class="countdown-container">
+                <div class="countdown" id="countdown" aria-live="polite"></div>
+            </div>
+        </div>
+        
+        <nav class="social-header" aria-label="Redes sociales">
+            <a href="https://www.facebook.com/share/1BGubDZoNg/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/festivalesdecomidasrapidas?igsh=MXhnem5sYnMxbmh5aA==" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </nav>
+    </div>
+</header>
+
+    <!-- Navegación principal -->
+    <nav class="main-nav" aria-label="Navegación principal">
+        <div class="container">
+            <div class="tabs">
+                <button class="tab-button active" data-tab="votacion" aria-selected="true" id="votacion-tab">
+                    <i class="fas fa-vote-yea" aria-hidden="true"></i> <span>Votación</span>
+                </button>
+                <button class="tab-button" data-tab="resultados" aria-selected="false" id="resultados-tab">
+                    <i class="fas fa-chart-bar" aria-hidden="true"></i> <span>Resultados</span>
+                </button>
+                <button class="tab-button" data-tab="ganadores" aria-selected="false" id="ganadores-tab">
+                    <i class="fas fa-trophy" aria-hidden="true"></i> <span>Ganadores</span>
+                </button>
+                <button class="tab-button" data-tab="comentarios" aria-selected="false" id="comentarios-tab">
+                    <i class="fas fa-comments" aria-hidden="true"></i> <span>Comentarios</span>
+                </button>
+                <button class="tab-button" data-tab="patrocinadores" aria-selected="false" id="patrocinadores-tab">
+                    <i class="fas fa-handshake" aria-hidden="true"></i> <span>Patrocinadores</span>
+                </button>
+                <button class="tab-button" data-tab="informacion" aria-selected="false" id="informacion-tab">
+                    <i class="fas fa-info-circle" aria-hidden="true"></i> <span>Información</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="container">
+        <!-- Sección de Votación -->
+        <section class="tab-content active" id="votacion" role="tabpanel" aria-labelledby="votacion-tab">
+            <div class="section-header">
+                <h2>Vota por tu perro caliente favorito</h2>
+                <p>Descubre las deliciosas opciones y elige tu favorito. ¡Cada voto cuenta!</p>
+            </div>
+            <div class="cards-container" id="perros-container" aria-live="polite">
+                <div class="loading">Cargando opciones...</div>
+            </div>
+        </section>
+
+        <!-- Sección de Resultados -->
+        <section class="tab-content" id="resultados" role="tabpanel" aria-labelledby="resultados-tab" hidden>
+            <div class="section-header">
+                <h2>Resultados de la Votación</h2>
+                <p>Consulta en tiempo real los perros calientes más votados del festival</p>
+            </div>
+            <div class="results-container">
+                <div class="result-category">
+                    <h3><i class="fas fa-hotdog" aria-hidden="true"></i> Perros Más Votados</h3>
+                    <div id="perros-results" aria-live="polite">
+                        <div class="loading">Cargando resultados...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Ganadores -->
+        <section class="tab-content" id="ganadores" role="tabpanel" aria-labelledby="ganadores-tab" hidden>
+            <div class="section-header">
+                <h2>Ganadores del Festival</h2>
+                <p>Los perros calientes más votados y premiados en esta edición</p>
+            </div>
+            <div class="winners-container" id="winners-container" aria-live="polite">
+                <div class="loading">Cargando ganadores...</div>
+            </div>
+        </section>
+
+        <!-- Sección de Comentarios -->
+        <section class="tab-content" id="comentarios" role="tabpanel" aria-labelledby="comentarios-tab" hidden>
+            <div class="section-header">
+                <h2>Comentarios del Festival</h2>
+                <p>Comparte tu experiencia y lee lo que otros asistentes opinan</p>
+            </div>
+            <div class="comment-form">
+                <div class="form-group">
+                    <label for="comment-name">Nombre:</label>
+                    <input type="text" id="comment-name" placeholder="Tu nombre" aria-label="Tu nombre" maxlength="50">
+                </div>
+                <div class="form-group">
+                    <label for="comment-text">Comentario:</label>
+                    <textarea id="comment-text" placeholder="Escribe tu comentario sobre el festival..." aria-label="Escribe tu comentario" maxlength="500"></textarea>
+                </div>
+                <div class="char-count"><span id="char-remaining">500</span> caracteres restantes</div>
+                <button id="submit-comment" class="btn-primary">
+                    <i class="fas fa-paper-plane" aria-hidden="true"></i> Enviar Comentario
+                </button>
+            </div>
+            <div class="comments-container" id="comments-container" aria-live="polite">
+                <div class="loading">Cargando comentarios...</div>
+            </div>
+        </section>
+
+        <!-- Sección de Patrocinadores -->
+        <section class="tab-content" id="patrocinadores" role="tabpanel" aria-labelledby="patrocinadores-tab" hidden>
+            <div class="section-header">
+                <h2>Nuestros Patrocinadores</h2>
+                <p>Conoce a las empresas que hacen posible este delicioso festival</p>
+            </div>
+            <div class="sponsors-container" id="sponsors-container" aria-live="polite">
+                <div class="loading">Cargando patrocinadores...</div>
+            </div>
+        </section>
+
+        <!-- Sección de Información -->
+        <section class="tab-content" id="informacion" role="tabpanel" aria-labelledby="informacion-tab" hidden>
+            <div class="section-header">
+                <h2>Información del Festival</h2>
+                <p>Todo lo que necesitas saber para disfrutar del festival</p>
+            </div>
+            <div class="info-content">
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                    </div>
+                    <h3>Fechas y Horarios</h3>
+                    <p><strong>2 al 5 de Octubre 2025</strong></p>
+                    <ul>
+                        <li>Jueves a domingo</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                    </div>
+                    <h3>Ubicación</h3>
+                    <p><strong> Planeta Rica</strong></p>
+                    <p> Planeta Rica, Córdoba</p>
+                    <button class="btn-secondary" id="map-button">
+                        <i class="fas fa-directions" aria-hidden="true"></i> Ver en Maps
+                    </button>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                    </div>
+                    <h3>Contacto Organizadores</h3>
+                    <p><strong>Xir David</strong></p>
+                    <div class="contact-info">
+                        <p><i class="fas fa-phone" aria-hidden="true"></i> 3216955581</p>
+                        
+                    </div>
+                    <div class="social-info">
+                        <a href="https://www.facebook.com/share/1BGubDZoNg/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/festivalesdecomidasrapidas?igsh=MXhnem5sYnMxbmh5aA==" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-users" aria-hidden="true"></i>
+                    </div>
+                    <h3>Estadísticas</h3>
+                    <p><strong id="total-votos">0 votos registrados</strong></p>
+                    <!-- CAMBIO: Actualizar de 6 a 3 establecimientos participantes -->
+                    <p>Participantes: <span id="total-participantes">20</span> establecimientos</p>
+                    <div class="stats-detalle" id="stats-detalle">
+                        <p class="loading">Cargando estadísticas...</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-chart-line" aria-hidden="true"></i>
+                    </div>
+                    <h3>Ventas por Día</h3>
+                    <div class="sales-stats" id="sales-stats">
+                        <div class="sales-day">
+                            <span class="sales-label">Día 1 (2 Oct):</span>
+                            <span class="sales-value" id="sales-day1">0</span>
+                        </div>
+                        <div class="sales-day">
+                            <span class="sales-label">Día 2 (3 Oct):</span>
+                            <span class="sales-value" id="sales-day2">0</span>
+                        </div>
+                        <div class="sales-day">
+                            <span class="sales-label">Día 3 (4 Oct):</span>
+                            <span class="sales-value" id="sales-day3">0</span>
+                        </div>
+                        <div class="sales-day">
+                            <span class="sales-label">Día 4 (5 Oct):</span>
+                            <span class="sales-value" id="sales-day4">0</span>
+                        </div>
+                        <div class="sales-total">
+                            <span class="sales-label">Total vendidos:</span>
+                            <span class="sales-value" id="sales-total">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Notificación flotante -->
+    <div class="notification" id="notification" aria-live="assertive" role="alert"></div>
+
+    <!-- Botón para toggle del sidebar -->
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Abrir menú">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar para móviles -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">
+            <span class="logo-icon">🌭</span>
+            <div>
+                <h3>Festival del Perro</h3>
+                <p class="festival-dates">2-5 Oct 2025</p>
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-button active" data-tab="votacion" aria-selected="true" id="sidebar-votacion-tab">
+                <i class="fas fa-vote-yea" aria-hidden="true"></i> <span>Votación</span>
+            </button>
+            <button class="tab-button" data-tab="resultados" aria-selected="false" id="sidebar-resultados-tab">
+                <i class="fas fa-chart-bar" aria-hidden="true"></i> <span>Resultados</span>
+            </button>
+            <button class="tab-button" data-tab="ganadores" aria-selected="false" id="sidebar-ganadores-tab">
+                <i class="fas fa-trophy" aria-hidden="true"></i> <span>Ganadores</span>
+            </button>
+            <button class="tab-button" data-tab="comentarios" aria-selected="false" id="sidebar-comentarios-tab">
+                <i class="fas fa-comments" aria-hidden="true"></i> <span>Comentarios</span>
+            </button>
+            <button class="tab-button" data-tab="patrocinadores" aria-selected="false" id="sidebar-patrocinadores-tab">
+                <i class="fas fa-handshake" aria-hidden="true"></i> <span>Patrocinadores</span>
+            </button>
+            <button class="tab-button" data-tab="informacion" aria-selected="false" id="sidebar-informacion-tab">
+                <i class="fas fa-info-circle" aria-hidden="true"></i> <span>Información</span>
+            </button>
+        </div>
+        
+        <div class="sidebar-social">
+            <a href="https://facebook.com/planetarica" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://instagram.com/planetarica" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+    </aside>
+<!-- Footer -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="img/fecha.png" alt="2 Festival del Perro Caliente" class="footer-logo-image">
+                <h3>2 Festival del Perro Caliente</h3>
+            </div>
+            <p>Planeta Rica</p>
+            <p class="footer-tagline">¡Disfruta del mejor sabor!</p>
+            
+            <div class="social-footer">
+                <a href="https://www.facebook.com/share/1BGubDZoNg/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/festivalesdecomidasrapidas?igsh=MXhnem5sYnMxbmh5aA==" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+            
+            <p class="footer-credits">Desarrollado por next-Desarrollo web a medida, para Planeta Rica</p>
+        </div>
+    </div>
+</footer>
+    
+    <!-- Script de Supabase DEBE estar PRIMERO -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- LUEGO tus scripts -->
+<script src="js/data.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/voting.js"></script>
+<script src="js/results.js"></script>
+<script src="js/winners.js"></script>
+<script src="js/comments.js"></script>
+<script src="js/sponsors.js"></script>
+<script src="js/info.js"></script>
+<script src="js/sales.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

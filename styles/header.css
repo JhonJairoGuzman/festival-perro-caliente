@@ -1,0 +1,168 @@
+/* Header con navegación */
+header {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    color: white;
+    padding: 1.5rem 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 100;
+}
+
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-width: 300px;
+}
+
+/* Estilos para la imagen del logo que reemplaza el texto */
+.logo-image {
+    height: 120px; /* Imagen más grande */
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+    display: block;
+    margin: 0 auto;
+}
+
+.countdown-container {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 0.8rem 1.5rem;
+    border-radius: 35px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.countdown {
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.social-header {
+    display: flex;
+    gap: 1.2rem;
+    flex-shrink: 0;
+}
+
+.social-header a {
+    color: white;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.social-header a:hover {
+    transform: translateY(-3px) scale(1.1);
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.whatsapp-link {
+    color: #25D366 !important;
+}
+
+/* Media queries para responsividad */
+@media (max-width: 1024px) {
+    .header-content {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .countdown-container {
+        margin: 0.5rem auto;
+        order: 2;
+    }
+    
+    .social-header {
+        order: 3;
+        margin-top: 0.5rem;
+    }
+    
+    .logo-image {
+        height: 100px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        text-align: center;
+        padding: 0 1.5rem;
+        gap: 1.5rem;
+    }
+    
+    .logo {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    .logo-image {
+        height: 90px;
+        max-width: 100%;
+    }
+    
+    .countdown {
+        font-size: 1.1rem;
+    }
+    
+    .social-header a {
+        width: 40px;
+        height: 40px;
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 1rem 0;
+    }
+    
+    .logo-image {
+        height: 70px;
+    }
+    
+    .countdown-container {
+        padding: 0.6rem 1.2rem;
+    }
+    
+    .countdown {
+        font-size: 1rem;
+    }
+    
+    .social-header {
+        gap: 0.8rem;
+    }
+    
+    .social-header a {
+        width: 35px;
+        height: 35px;
+        font-size: 1.1rem;
+    }
+}

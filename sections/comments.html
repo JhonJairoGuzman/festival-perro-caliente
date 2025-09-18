@@ -1,0 +1,17 @@
+<section class="tab-content" id="comentarios" role="tabpanel" aria-labelledby="comentarios-tab" hidden>
+    <div class="section-header">
+        <h2>Comentarios del Festival</h2>
+        <p>Comparte tu experiencia y lee lo que otros asistentes opinan</p>
+    </div>
+    <div class="comment-form">
+        <label for="comment-text" class="sr-only">Escribe tu comentario</label>
+        <textarea id="comment-text" placeholder="Escribe tu comentario sobre el festival..." aria-label="Escribe tu comentario" maxlength="500"></textarea>
+        <div class="char-count"><span id="char-remaining">500</span> caracteres restantes</div>
+        <button id="submit-comment" class="btn-primary">
+            <i class="fas fa-paper-plane" aria-hidden="true"></i> Enviar Comentario
+        </button>
+    </div>
+    <div class="comments-container" id="comments-container" aria-live="polite">
+        <div class="loading">Cargando comentarios...</div>
+    </div>
+</section>

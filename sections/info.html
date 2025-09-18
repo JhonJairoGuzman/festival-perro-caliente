@@ -1,0 +1,87 @@
+<section class="tab-content" id="informacion" role="tabpanel" aria-labelledby="informacion-tab" hidden>
+    <div class="section-header">
+        <h2>Información del Festival</h2>
+        <p>Todo lo que necesitas saber para disfrutar del festival</p>
+    </div>
+    <div class="info-content">
+        <div class="info-card">
+            <div class="info-icon">
+                <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+            </div>
+            <h3>Fechas y Horarios</h3>
+            <p><strong>2 al 5 de Octubre 2025</strong></p>
+            <ul>
+                <li>Jueves a domingo</li>
+            </ul>
+        </div>
+        
+        <div class="info-card">
+            <div class="info-icon">
+                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+            </div>
+            <h3>Ubicación</h3>
+            <p><strong> Planeta Rica</strong></p>
+            <p> Planeta Rica, Córdoba</p>
+            <button class="btn-secondary" id="map-button">
+                <i class="fas fa-directions" aria-hidden="true"></i> Ver en Maps
+            </button>
+        </div>
+        
+        <div class="info-card">
+            <div class="info-icon">
+                <i class="fas fa-phone-alt" aria-hidden="true"></i>
+            </div>
+            <h3>Contacto Organizadores</h3>
+            <p><strong>Alcaldía de Planeta Rica</strong></p>
+            <div class="contact-info">
+                <p><i class="fas fa-phone" aria-hidden="true"></i> (604) 123 4567</p>
+                <p><i class="fas fa-envelope" aria-hidden="true"></i> festival@planetarica.gov.co</p>
+            </div>
+            <div class="social-info">
+                <a href="https://facebook.com/planetarica" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com/planetarica" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="info-icon">
+                <i class="fas fa-users" aria-hidden="true"></i>
+            </div>
+            <h3>Estadísticas</h3>
+            <p><strong id="total-votos">0 votos registrados</strong></p>
+            <p>Participantes: <span id="total-participantes">6</span> establecimientos</p>
+            <div class="stats-detalle" id="stats-detalle">
+                <p class="loading">Cargando estadísticas...</p>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="info-icon">
+                <i class="fas fa-chart-line" aria-hidden="true"></i>
+            </div>
+            <h3>Ventas por Día</h3>
+            <div class="sales-stats" id="sales-stats">
+                <div class="sales-day">
+                    <span class="sales-label">Día 1 (2 Oct):</span>
+                    <span class="sales-value" id="sales-day1">0</span>
+                </div>
+                <div class="sales-day">
+                    <span class="sales-label">Día 2 (3 Oct):</span>
+                    <span class="sales-value" id="sales-day2">0</span>
+                </div>
+                <div class="sales-day">
+                    <span class="sales-label">Día 3 (4 Oct):</span>
+                    <span class="sales-value" id="sales-day3">0</span>
+                </div>
+                <div class="sales-day">
+                    <span class="sales-label">Día 4 (5 Oct):</span>
+                    <span class="sales-value" id="sales-day4">0</span>
+                </div>
+                <div class="sales-total">
+                    <span class="sales-label">Total vendidos:</span>
+                    <span class="sales-value" id="sales-total">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

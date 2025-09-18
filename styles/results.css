@@ -1,0 +1,228 @@
+/* Resultados */
+.results-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+}
+
+.result-category {
+    background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    border: 2px solid var(--primary-color);
+}
+
+.result-category h3 {
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.result-item {
+    display: flex;
+    align-items: center;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid #333;
+    gap: 1rem;
+}
+
+.result-item:last-child {
+    border-bottom: none;
+}
+
+.result-rank {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: white;
+}
+
+.result-rank.first-place {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    color: #000;
+    box-shadow: 0 0 15px #FFD700;
+}
+
+.result-rank.second-place {
+    background: linear-gradient(135deg, #C0C0C0, #A9A9A9);
+    color: #000;
+    box-shadow: 0 0 15px #C0C0C0;
+}
+
+.result-rank.third-place {
+    background: linear-gradient(135deg, #CD7F32, #8B4513);
+    color: white;
+    box-shadow: 0 0 15px #CD7F32;
+}
+
+.result-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.result-info h4 {
+    margin: 0 0 0.3rem 0;
+    font-size: 1.1rem;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.result-business {
+    margin: 0 0 0.8rem 0;
+    color: var(--gray-medium);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.result-bar-container {
+    background-color: #333;
+    border-radius: 10px;
+    height: 25px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+    margin-bottom: 0.5rem;
+}
+
+.result-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 10px;
+    transition: width 1s ease-out;
+    box-shadow: 0 0 15px var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 10px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    min-width: 60px;
+}
+
+.result-bar-text {
+    display: none; /* Ocultamos el texto dentro de la barra */
+}
+
+.result-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.result-votes {
+    color: var(--secondary-color);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.result-percentage {
+    color: var(--gray-light);
+}
+
+.result-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 2px solid var(--primary-color);
+}
+
+.result-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Para logos que no cargan */
+.result-logo img[src=""],
+.result-logo img:not([src]) {
+    display: none;
+}
+
+.result-logo:has(img[src=""])::after,
+.result-logo:has(img:not([src]))::after {
+    content: attr(data-fallback);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .result-item {
+        flex-wrap: wrap;
+    }
+    
+    .result-info {
+        flex-basis: 100%;
+        order: 3;
+        margin-top: 0.5rem;
+    }
+    
+    .result-logo {
+        order: 2;
+        margin-left: auto;
+    }
+    
+    .result-stats {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.3rem;
+    }
+}
+
+/* Estados de carga y error */
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: var(--gray-medium);
+}
+
+.error-message {
+    text-align: center;
+    padding: 2rem;
+    color: #e74c3c;
+    background: rgba(231, 76, 60, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(231, 76, 60, 0.3);
+}
+
+.btn-retry {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-retry:hover {
+    background: var(--primary-dark);
+}

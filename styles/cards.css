@@ -1,0 +1,323 @@
+/* Estilos para las tarjetas de perros calientes */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+}
+
+.card {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+}
+
+/* Estilos para logos redondos - POSICIÓN MÁS ALTA (3cm arriba) */
+.card-logo {
+    position: absolute;
+    top: -30px; /* Cambiado de bottom a top para posicionar más arriba */
+    right: 25px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    border: 5px solid white;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.card:hover .card-logo {
+    transform: scale(1.08) rotate(2deg);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+}
+
+.logo-circle {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .logo-circle {
+    transform: scale(1.05);
+}
+
+/* Ajuste del contenedor de imagen para acomodar el logo más arriba */
+.card-image-container {
+    position: relative;
+    height: 300px; /* Reducida ligeramente para compensar el logo más arriba */
+    overflow: visible; /* Cambiado de hidden a visible para que el logo no se recorte */
+    border-radius: 18px 18px 0 0;
+    margin-top: 30px; /* Espacio para el logo en la parte superior */
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    border-radius: 18px 18px 0 0;
+}
+
+.card:hover .card-image {
+    transform: scale(1.08);
+}
+
+.card-content {
+    padding: 1.5rem 1.5rem 1.5rem; /* Ajustado el padding superior */
+    position: relative;
+}
+
+.card-content h4 {
+    margin: 0.5rem 0 0.8rem 0; /* Añadido margen superior */
+    font-size: 1.5rem;
+    color: #2F4858;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.card-content > p {
+    color: #666;
+    margin-bottom: 1.2rem;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.ingredients {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+}
+
+.ingredient-tag {
+    background: linear-gradient(135deg, #FFF5E8, #FFE5CC);
+    color: #FF6B35;
+    padding: 0.4rem 0.9rem;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 2px solid #FFD9B3;
+    transition: all 0.3s ease;
+}
+
+.ingredient-tag:hover {
+    background: linear-gradient(135deg, #FFE5CC, #FFD9B3);
+    transform: translateY(-2px);
+}
+
+.business-info {
+    background: linear-gradient(135deg, #F8F9FA, #E9ECEF);
+    padding: 1.2rem;
+    border-radius: 12px;
+    margin-bottom: 1.8rem;
+    border-left: 5px solid #FF6B35;
+    transition: all 0.3s ease;
+}
+
+.business-info:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.1);
+}
+
+.business-info p {
+    margin: 0.4rem 0;
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.5;
+}
+
+.business-info strong {
+    color: #2F4858;
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.business-info i {
+    color: #FF6B35;
+    width: 18px;
+    margin-right: 0.6rem;
+    font-size: 1.1rem;
+}
+
+.vote-btn {
+    width: 100%;
+    padding: 1.2rem;
+    background: linear-gradient(135deg, #FF6B35, #F7931E, #FF6B35);
+    background-size: 200% 100%;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    letter-spacing: 0.5px;
+}
+
+.vote-btn:hover {
+    background-position: 100% 0;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 107, 53, 0.4);
+}
+
+.vote-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
+}
+
+/* Estados de carga y error */
+.loading, .error-message {
+    text-align: center;
+    padding: 4rem 2rem;
+    font-size: 1.2rem;
+    color: #666;
+    grid-column: 1 / -1;
+    background: #F8F9FA;
+    border-radius: 16px;
+    margin: 2rem 0;
+}
+
+.error-message {
+    color: #E53E3E;
+    background: #FED7D7;
+    border: 2px solid #FEB2B2;
+}
+
+/* Efecto de brillo en hover para la tarjeta */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #FF6B35, #F7931E, #FF6B35);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+    z-index: 15;
+}
+
+.card:hover::before {
+    transform: scaleX(1);
+}
+
+/* Estilos responsivos */
+@media (max-width: 1024px) {
+    .cards-container {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 1.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .cards-container {
+        grid-template-columns: 1fr;
+        gap: 1.8rem;
+        padding: 1rem;
+    }
+    
+    .card-logo {
+        width: 85px;
+        height: 85px;
+        top: -25px; /* Ajustado para móvil */
+        right: 20px;
+        border-width: 4px;
+    }
+    
+    .card-image-container {
+        height: 200px;
+        margin-top: 25px;
+    }
+    
+    .card-content {
+        padding: 1.5rem 1.2rem 1.2rem;
+    }
+    
+    .card-content h4 {
+        font-size: 1.4rem;
+    }
+    
+    .business-info {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .card-image-container {
+        height: 180px;
+        margin-top: 20px;
+    }
+    
+    .card-logo {
+        width: 70px;
+        height: 70px;
+        top: -20px; /* Ajustado para móvil */
+        right: 15px;
+    }
+    
+    .card-content {
+        padding: 1.3rem 1rem 1rem;
+    }
+    
+    .card-content h4 {
+        font-size: 1.3rem;
+        margin-top: 0.3rem;
+    }
+    
+    .ingredient-tag {
+        font-size: 0.85rem;
+        padding: 0.35rem 0.8rem;
+    }
+    
+    .vote-btn {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+    
+    .business-info p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Animación de aparición para las tarjetas */
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: cardAppear 0.6s ease forwards;
+}
+
+.card:nth-child(2) { animation-delay: 0.1s; }
+.card:nth-child(3) { animation-delay: 0.2s; }
+.card:nth-child(4) { animation-delay: 0.3s; }
+.card:nth-child(5) { animation-delay: 0.4s; }
+.card:nth-child(n+6) { animation-delay: 0.5s; }

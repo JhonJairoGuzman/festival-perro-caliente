@@ -1,0 +1,327 @@
+/* Responsive */
+@media (max-width: 1200px) {
+    .header-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+    }
+    
+    .countdown-container {
+        margin-left: 0;
+    }
+    
+    .cards-container {
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    }
+}
+
+@media (max-width: 992px) {
+    .section-header h2 {
+        font-size: 2.2rem;
+    }
+    
+    .info-content {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+    
+    .sponsors-container {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1.5rem;
+    }
+    
+    .header-container {
+        padding: 0 1.5rem;
+    }
+    
+    .logo {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .logo h1 {
+        font-size: 1.6rem;
+    }
+    
+    .tabs {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .tab-button {
+        width: 100%;
+        justify-content: center;
+        padding: 1.2rem;
+    }
+    
+    .tab-button span {
+        display: inline;
+    }
+    
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .info-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .sponsors-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .result-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+    }
+    
+    .result-bar-container {
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+    
+    .comment-header {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .section-header h2 {
+        font-size: 2rem;
+    }
+    
+    .section-header p {
+        font-size: 1.1rem;
+    }
+    
+    .card-image-container {
+        height: 220px;
+    }
+    
+    .card-content {
+        padding: 1.5rem;
+    }
+    
+    .notification {
+        left: 1.5rem;
+        right: 1.5rem;
+        max-width: none;
+        bottom: 1.5rem;
+    }
+    
+    .winners-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .winner-card {
+        padding: 1.5rem;
+    }
+    
+    .winner-image {
+        width: 100px;
+        height: 100px;
+    }
+    
+    /* Ajustes específicos para sidebar en móviles */
+    .sidebar-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .main-nav .container {
+        display: none;
+    }
+    
+    .header-content {
+        padding-right: 70px; /* Espacio para el botón del sidebar */
+    }
+    
+    /* Asegurar que el contenido principal no se desplace con el sidebar abierto */
+    body.sidebar-open {
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+    }
+    
+    /* Ajustar z-index para que el sidebar esté por encima de todo */
+    .sidebar {
+        z-index: 1000;
+    }
+    
+    .sidebar-overlay {
+        z-index: 999;
+    }
+    
+    /* Mejorar visibilidad del botón toggle en diferentes fondos */
+    .sidebar-toggle {
+        background: var(--primary-color);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .header-container {
+        padding: 0 1rem;
+    }
+    
+    .logo h1 {
+        font-size: 1.4rem;
+    }
+    
+    .festival-dates {
+        font-size: 0.9rem;
+    }
+    
+    .countdown {
+        font-size: 1rem;
+    }
+    
+    .section-header h2 {
+        font-size: 1.8rem;
+    }
+    
+    .section-header p {
+        font-size: 1rem;
+    }
+    
+    .card-image-container {
+        height: 200px;
+    }
+    
+    .card-content {
+        padding: 1.2rem;
+    }
+    
+    .card h4 {
+        font-size: 1.3rem;
+    }
+    
+    .info-card, .comment-form, .sponsor-card, .result-category {
+        padding: 1.5rem;
+    }
+    
+    .social-header a, .social-footer a, .social-info a {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    
+    /* Ajustes específicos para móviles pequeños */
+    .sidebar {
+        width: 280px;
+        padding: 15px;
+    }
+    
+    .sidebar-toggle {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+        top: 12px;
+        right: 12px;
+    }
+    
+    .sidebar .tab-button {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .sidebar .logo-icon {
+        font-size: 2rem;
+    }
+    
+    .sidebar .logo h3 {
+        font-size: 1.1rem;
+    }
+    
+    .sidebar-social a {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    
+    /* Ajustar header para móviles muy pequeños */
+    .header-content {
+        padding-right: 60px;
+    }
+}
+
+/* Ajustes para tablets en orientación horizontal */
+@media (max-width: 1024px) and (orientation: landscape) {
+    .sidebar {
+        width: 280px;
+    }
+    
+    .sidebar .tabs {
+        margin-top: 30px;
+    }
+    
+    .sidebar .tab-button {
+        padding: 1rem;
+    }
+}
+
+/* Ajustes para dispositivos con altura reducida */
+@media (max-height: 600px) {
+    .sidebar .logo {
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+    }
+    
+    .sidebar .tabs {
+        margin-top: 20px;
+        gap: 0.5rem;
+    }
+    
+    .sidebar .tab-button {
+        padding: 0.8rem;
+    }
+    
+    .sidebar-social {
+        margin-top: 20px;
+        padding-top: 15px;
+    }
+}
+
+/* Prevenir zoom en inputs en iOS */
+@media (max-width: 768px) {
+    input, select, textarea {
+        font-size: 16px; /* Previene zoom en iOS */
+    }
+}
+
+/* Mejoras de accesibilidad para modo alto contraste */
+@media (prefers-contrast: high) {
+    .sidebar {
+        border-left: 3px solid var(--primary-color);
+    }
+    
+    .sidebar-toggle {
+        outline: 2px solid white;
+    }
+}
+
+/* Soporte para dispositivos con safe-area insets (notch) */
+@supports(padding: max(0px)) {
+    .sidebar {
+        padding-top: max(15px, env(safe-area-inset-top));
+        padding-right: max(15px, env(safe-area-inset-right));
+        padding-bottom: max(15px, env(safe-area-inset-bottom));
+        padding-left: max(15px, env(safe-area-inset-left));
+    }
+    
+    .sidebar-toggle {
+        top: max(15px, env(safe-area-inset-top));
+        right: max(15px, env(safe-area-inset-right));
+    }
+}
