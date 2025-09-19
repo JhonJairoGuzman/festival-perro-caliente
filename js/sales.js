@@ -1,27 +1,49 @@
+// sales.js - Versión corregida para evitar conflictos
+
 // Funciones relacionadas con ventas
 function actualizarVentas(dia, cantidad) {
+    // Usar window.festivalData para compatibilidad
+    const festivalData = window.festivalData || { ventas: { dia1: 0, dia2: 0, dia3: 0, dia4: 0, total: 0 } };
+    
     if (dia >= 1 && dia <= 4) {
-        festivalData.ventas[`dia${dia}`] += cantidad;
-        festivalData.ventas.total += cantidad;
-        guardarDatos();
-        actualizarUIventas();
+        festivalData.ventas[`dia${dia}`] = (festivalData.ventas[`dia${dia}`] || 0) + cantidad;
+        festivalData.ventas.total = (festivalData.ventas.total || 0) + cantidad;
+        
+        // Guardar datos si la función existe
+        if (typeof window.guardarDatos === 'function') {
+            window.guardarDatos();
+        }
+        
+        // Actualizar UI si la función existe
+        if (typeof window.actualizarUIventas === 'function') {
+            window.actualizarUIventas();
+        }
+        
         return true;
     }
     return false;
 }
 
 function obtenerVentasDelDia(dia) {
+    // Usar window.festivalData para compatibilidad
+    const festivalData = window.festivalData || { ventas: {} };
+    
     if (dia >= 1 && dia <= 4) {
-        return festivalData.ventas[`dia${dia}`];
+        return festivalData.ventas[`dia${dia}`] || 0;
     }
     return 0;
 }
 
 function obtenerVentasTotales() {
-    return festivalData.ventas.total;
+    // Usar window.festivalData para compatibilidad
+    const festivalData = window.festivalData || { ventas: {} };
+    return festivalData.ventas.total || 0;
 }
 
 function obtenerDiaActualDelFestival() {
+    // Usar window.festivalData para compatibilidad
+    const festivalData = window.festivalData || { fechaInicio: '2025-10-02' };
+    
     const hoy = new Date();
     const inicio = new Date(festivalData.fechaInicio);
     
@@ -63,5 +85,27 @@ function simularVentas() {
         // Simular entre 50 y 200 ventas por día
         const ventasSimuladas = Math.floor(Math.random() * 151) + 50;
         actualizarVentas(diaActual, ventasSimuladas);
+        
+        // Mostrar notificación si la función existe
+        if (typeof window.mostrarNotificacion === 'function') {
+            window.mostrarNotificacion(`Simuladas ${ventasSimuladas} ventas para el día ${diaActual}`, 'info');
+        }
     }
+}
+
+// Añadir funciones al ámbito global
+window.actualizarVentas = actualizarVentas;
+window.obtenerVentasDelDia = obtenerVentasDelDia;
+window.obtenerVentasTotales = obtenerVentasTotales;
+window.obtenerDiaActualDelFestival = obtenerDiaActualDelFestival;
+window.actualizarUIventas = actualizarUIventas;
+window.simularVentas = simularVentas;
+
+// Inicializar cuando el DOM esté listo
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('✅ sales.js inicializado');
+    });
+} else {
+    console.log('✅ sales.js inicializado');
 }

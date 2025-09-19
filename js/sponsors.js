@@ -1,7 +1,12 @@
+// sponsors.js - Versión corregida para evitar errores y mejorar compatibilidad
+
 // Mostrar patrocinadores
 function mostrarPatrocinadores() {
     const container = document.getElementById('sponsors-container');
-    if (!container) return;
+    if (!container) {
+        console.log('❌ Contenedor de patrocinadores no encontrado');
+        return;
+    }
     
     // Mostrar estado de carga
     container.innerHTML = '<div class="loading">Cargando patrocinadores...</div>';
@@ -47,7 +52,7 @@ function mostrarPatrocinadores() {
             {
                 nombre: "Next",
                 imagen: "img/next.jpg",
-                descripcion: "desarrollo web a medida",
+                descripcion: "Desarrollo web a medida",
                 direccion: "Empresa virtual #202",
                 telefono: "322-615-5457  -   314-695-8058",
                 redes: ["@nextcol", "#futuronext"],
@@ -67,9 +72,15 @@ function mostrarPatrocinadores() {
         patrocinadoresEjemplo.forEach(patrocinador => {
             const card = document.createElement('div');
             card.className = 'sponsor-card';
+            
+            // Manejar imágenes que puedan no cargar
+            const imagenHTML = patrocinador.imagen ? 
+                `<img src="${patrocinador.imagen}" alt="${patrocinador.nombre}" loading="lazy" onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjRkZGN0U3Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkxPR088L3RleHQ+PC9zdmc+'; this.alt='Logo no disponible'">` :
+                `<div class="sponsor-placeholder">${patrocinador.nombre.charAt(0)}</div>`;
+            
             card.innerHTML = `
                 <div class="sponsor-logo">
-                    <img src="${patrocinador.imagen}" alt="${patrocinador.nombre}" loading="lazy">
+                    ${imagenHTML}
                 </div>
                 <h4>${patrocinador.nombre}</h4>
                 <p>${patrocinador.descripcion}</p>
@@ -87,5 +98,35 @@ function mostrarPatrocinadores() {
             `;
             container.appendChild(card);
         });
+        
+        console.log('✅ Patrocinadores cargados correctamente');
     }, 800);
+}
+
+// Añadir función al ámbito global
+window.mostrarPatrocinadores = mostrarPatrocinadores;
+
+// Inicializar cuando se accede a la pestaña de patrocinadores
+function initSponsors() {
+    // Verificar si estamos en la pestaña de patrocinadores
+    const sponsorsTab = document.querySelector('[data-tab="patrocinadores"]');
+    const sponsorsSection = document.getElementById('patrocinadores');
+    
+    if (sponsorsTab && sponsorsSection && !sponsorsSection.hasAttribute('hidden')) {
+        mostrarPatrocinadores();
+    }
+    
+    // Configurar evento para cuando se haga clic en la pestaña
+    if (sponsorsTab) {
+        sponsorsTab.addEventListener('click', mostrarPatrocinadores);
+    }
+}
+
+// Inicializar cuando el DOM esté listo
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(initSponsors, 100);
+    });
+} else {
+    setTimeout(initSponsors, 100);
 }

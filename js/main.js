@@ -1,3 +1,5 @@
+// main.js - Versión corregida para evitar conflictos con otros archivos
+
 // Configurar eventos de la interfaz
 function configurarEventos() {
     // Tabs
@@ -10,8 +12,8 @@ function configurarEventos() {
 
     // Envío de comentarios
     const submitCommentBtn = document.getElementById('submit-comment');
-    if (submitCommentBtn) {
-        submitCommentBtn.addEventListener('click', agregarComentario);
+    if (submitCommentBtn && window.agregarComentario) {
+        submitCommentBtn.addEventListener('click', window.agregarComentario);
     }
     
     // Contador de caracteres para comentarios
@@ -21,14 +23,18 @@ function configurarEventos() {
             const maxLength = 500;
             const currentLength = this.value.length;
             const remaining = maxLength - currentLength;
-            document.getElementById('char-remaining').textContent = remaining;
+            const charRemaining = document.getElementById('char-remaining');
             
-            if (remaining < 50) {
-                document.getElementById('char-remaining').style.color = '#e31837';
-            } else if (remaining < 100) {
-                document.getElementById('char-remaining').style.color = '#f9a826';
-            } else {
-                document.getElementById('char-remaining').style.color = '#cccccc';
+            if (charRemaining) {
+                charRemaining.textContent = remaining;
+                
+                if (remaining < 50) {
+                    charRemaining.style.color = '#e31837';
+                } else if (remaining < 100) {
+                    charRemaining.style.color = '#f9a826';
+                } else {
+                    charRemaining.style.color = '#cccccc';
+                }
             }
         });
     }
@@ -42,11 +48,11 @@ function configurarEventos() {
     }
     
     // Tecla Enter para enviar comentarios
-    if (commentText) {
+    if (commentText && window.agregarComentario) {
         commentText.addEventListener('keypress', function(e) {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
-                if (submitCommentBtn) submitCommentBtn.click();
+                window.agregarComentario();
             }
         });
     }
@@ -121,20 +127,23 @@ async function cambiarTab(tabId) {
         try {
             switch(tabId) {
                 case 'resultados':
-                    if (typeof mostrarResultados === 'function') await mostrarResultados();
+                    if (typeof window.mostrarResultados === 'function') await window.mostrarResultados();
                     break;
                 case 'ganadores':
-                    if (typeof mostrarGanadores === 'function') await mostrarGanadores();
+                    if (typeof window.mostrarGanadores === 'function') await window.mostrarGanadores();
                     break;
                 case 'comentarios':
-                    if (typeof mostrarComentarios === 'function') await mostrarComentarios();
+                    if (typeof window.mostrarComentarios === 'function') await window.mostrarComentarios();
                     break;
                 case 'patrocinadores':
-                    if (typeof mostrarPatrocinadores === 'function') await mostrarPatrocinadores();
+                    if (typeof window.mostrarPatrocinadores === 'function') await window.mostrarPatrocinadores();
                     break;
                 case 'informacion':
-                    if (typeof actualizarInfoVentas === 'function') await actualizarInfoVentas();
-                    if (typeof actualizarUIventas === 'function') actualizarUIventas();
+                    if (typeof window.actualizarInfoVentas === 'function') await window.actualizarInfoVentas();
+                    if (typeof window.actualizarUIventas === 'function') window.actualizarUIventas();
+                    break;
+                case 'votacion':
+                    if (typeof window.mostrarPerros === 'function') await window.mostrarPerros();
                     break;
             }
         } catch (error) {
@@ -146,7 +155,7 @@ async function cambiarTab(tabId) {
 // Función para verificar si el festival ha terminado
 function verificarFinFestival() {
     const hoy = new Date();
-    const finFestival = new Date(festivalData.fechaFin);
+    const finFestival = new Date(window.festivalData?.fechaFin || '2025-10-05');
     finFestival.setHours(23, 59, 59, 999); // Final del último día
     
     if (hoy > finFestival) {
@@ -163,7 +172,9 @@ function verificarFinFestival() {
             resultadosTab.click(); // Mostrar resultados automáticamente
         }
         
-        mostrarNotificacion('¡El festival ha terminado! Consulta los resultados finales.', 'info');
+        if (typeof window.mostrarNotificacion === 'function') {
+            window.mostrarNotificacion('¡El festival ha terminado! Consulta los resultados finales.', 'info');
+        }
     }
 }
 
@@ -180,35 +191,69 @@ function verificarActualizacionDiaria() {
     }
 }
 
+// Función para mostrar notificaciones (compatibilidad)
+function mostrarNotificacion(mensaje, tipo = 'info') {
+    // Si ya existe una función de notificación, usar esa
+    if (window.mostrarNotificacion && window.mostrarNotificacion !== mostrarNotificacion) {
+        return window.mostrarNotificacion(mensaje, tipo);
+    }
+    
+    // Crear notificación básica
+    const notificacion = document.createElement('div');
+    notificacion.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        background: ${tipo === 'error' ? '#e74c3c' : 
+                     tipo === 'success' ? '#27ae60' : 
+                     tipo === 'warning' ? '#f39c12' : '#3498db'};
+        color: white;
+        border-radius: 5px;
+        z-index: 10000;
+        font-weight: bold;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    `;
+    notificacion.textContent = mensaje;
+    document.body.appendChild(notificacion);
+    
+    setTimeout(() => {
+        if (notificacion.parentNode) {
+            notificacion.parentNode.removeChild(notificacion);
+        }
+    }, 5000);
+}
+
 // Inicializar la aplicación
 async function initApp() {
     console.log('Inicializando Festival del Perro Caliente...');
     
     try {
         // Primero inicializar los datos locales
-        if (typeof inicializarDatos === 'function') inicializarDatos();
+        if (typeof window.inicializarDatos === 'function') window.inicializarDatos();
         
         // Inicializar Supabase
-        if (typeof initializeDatabase === 'function') {
-            await initializeDatabase();
+        if (typeof window.initializeDatabase === 'function') {
+            await window.initializeDatabase();
         }
         
         // Configurar eventos
         if (typeof configurarEventos === 'function') configurarEventos();
         
         // Mostrar contenido inicial
-        if (typeof actualizarContador === 'function') actualizarContador();
-        if (typeof mostrarPerros === 'function') await mostrarPerros();
-        if (typeof mostrarPatrocinadores === 'function') await mostrarPatrocinadores();
+        if (typeof window.actualizarContador === 'function') window.actualizarContador();
+        if (typeof window.mostrarPerros === 'function') await window.mostrarPerros();
+        if (typeof window.mostrarPatrocinadores === 'function') await window.mostrarPatrocinadores();
+        
+        // Verificar fin del festival
+        verificarFinFestival();
         
         // Configurar intervalos
-        if (typeof actualizarContador === 'function') {
-            setInterval(actualizarContador, 1000);
+        if (typeof window.actualizarContador === 'function') {
+            setInterval(window.actualizarContador, 1000);
         }
         
-        if (typeof verificarActualizacionDiaria === 'function') {
-            setInterval(verificarActualizacionDiaria, 60000); // Cada minuto
-        }
+        setInterval(verificarActualizacionDiaria, 60000); // Cada minuto
         
         console.log('Aplicación inicializada correctamente');
         
@@ -236,3 +281,8 @@ window.addEventListener('unhandledrejection', function(e) {
     mostrarNotificacion('Ocurrió un error inesperado. Por favor, recarga la página.', 'error');
     e.preventDefault();
 });
+
+// Añadir funciones al ámbito global
+window.cambiarTab = cambiarTab;
+window.configurarEventos = configurarEventos;
+window.mostrarNotificacion = mostrarNotificacion;

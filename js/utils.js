@@ -1,7 +1,21 @@
+// utils.js - Versión corregida para evitar errores y mejorar compatibilidad
+
 // Mostrar notificaciones
 function mostrarNotificacion(mensaje, tipo = 'success') {
+    // Si ya existe una función de notificación, usar esa
+    if (window.mostrarNotificacion && window.mostrarNotificacion !== mostrarNotificacion) {
+        return window.mostrarNotificacion(mensaje, tipo);
+    }
+    
     const notification = document.getElementById('notification');
-    if (!notification) return;
+    if (!notification) {
+        // Crear notificación si no existe
+        const notificationElement = document.createElement('div');
+        notificationElement.id = 'notification';
+        notificationElement.className = 'notification';
+        document.body.appendChild(notificationElement);
+        return mostrarNotificacion(mensaje, tipo); // Llamar recursivamente
+    }
     
     // Agregar icono según el tipo
     let icono = '';
@@ -90,12 +104,19 @@ function crearConfeti() {
     
     // Eliminar contenedor después de 5 segundos
     setTimeout(() => {
-        confettiContainer.remove();
+        if (confettiContainer.parentNode) {
+            confettiContainer.remove();
+        }
     }, 5000);
 }
 
 // Crear partículas de fondo
 function crearParticulas() {
+    // Verificar si ya existen partículas
+    if (document.querySelector('.background-particles')) {
+        return;
+    }
+    
     const particlesContainer = document.createElement('div');
     particlesContainer.className = 'background-particles';
     document.body.appendChild(particlesContainer);
@@ -131,6 +152,12 @@ function crearParticulas() {
 
 // Actualizar contador regresivo
 function actualizarContador() {
+    // Usar window.festivalData para compatibilidad
+    const festivalData = window.festivalData || { 
+        fechaInicio: '2025-10-02', 
+        fechaFin: '2025-10-05' 
+    };
+    
     const ahora = new Date();
     const inicioFestival = new Date(festivalData.fechaInicio);
     const finFestival = new Date(festivalData.fechaFin);
@@ -173,8 +200,13 @@ function actualizarContador() {
 
 // Verificar si es necesario actualizar (cada 24 horas)
 function verificarActualizacionDiaria() {
+    // Usar window.festivalData para compatibilidad
+    const festivalData = window.festivalData || { 
+        ultimaActualizacion: new Date().toISOString() 
+    };
+    
     const ahora = new Date();
-    const ultimaActualizacion = new Date(festivalData.ultimaActualizacion);
+    const ultimaActualizacion = new Date(festivalData.ultimaActualizacion || new Date());
     const horasDesdeUltimaActualizacion = (ahora - ultimaActualizacion) / (1000 * 60 * 60);
     
     if (horasDesdeUltimaActualizacion >= 24) {
@@ -182,9 +214,32 @@ function verificarActualizacionDiaria() {
         localStorage.removeItem('votosHoy');
         
         // Actualizar fecha de última actualización
-        festivalData.ultimaActualizacion = ahora;
-        guardarDatos();
+        festivalData.ultimaActualizacion = ahora.toISOString();
+        
+        // Guardar datos si la función existe
+        if (typeof window.guardarDatos === 'function') {
+            window.guardarDatos();
+        }
         
         mostrarNotificacion('¡El sistema se ha actualizado! Ya puedes votar nuevamente.', 'info');
     }
+}
+
+// Añadir funciones al ámbito global
+window.mostrarNotificacion = mostrarNotificacion;
+window.crearConfeti = crearConfeti;
+window.crearParticulas = crearParticulas;
+window.actualizarContador = actualizarContador;
+window.verificarActualizacionDiaria = verificarActualizacionDiaria;
+
+// Inicializar cuando el DOM esté listo
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('✅ utils.js inicializado');
+        // Crear partículas de fondo
+        setTimeout(crearParticulas, 1000);
+    });
+} else {
+    console.log('✅ utils.js inicializado');
+    setTimeout(crearParticulas, 1000);
 }

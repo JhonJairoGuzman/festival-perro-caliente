@@ -1,7 +1,7 @@
 // data.js - Versión corregida para usar cliente global de Supabase
 
 // 1. PRIMERO: Usar el cliente global de Supabase con verificación robusta
-const supabase = window.supabaseClient || null;
+const supabase = window.supabaseClient;
 
 // Verificar que el cliente esté disponible
 if (!supabase) {
