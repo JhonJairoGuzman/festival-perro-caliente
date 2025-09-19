@@ -1,8 +1,3 @@
-// voting.js - Versión corregida - Fecha: 18/09/2025
-
-// 1. USAR CLIENTE GLOBAL DE SUPABASE CON VERIFICACIÓN
-const supabase = window.supabaseClient;
-
 // 2. DEFINIR festivalData SI NO EXISTE
 const festivalData = window.festivalData || {
     fechaInicio: '2025-09-18', // FECHA ACTUAL DEL FESTIVAL

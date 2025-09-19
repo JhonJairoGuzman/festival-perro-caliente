@@ -1,8 +1,3 @@
-// results.js - Versión corregida para usar cliente global de Supabase
-
-// 1. USAR CLIENTE GLOBAL DE SUPABASE CON VERIFICACIÓN
-const supabase = window.supabaseClient;
-
 // 2. FUNCIÓN OBTENER RESULTADOS CORREGIDA
 async function getResults() {
     try {
