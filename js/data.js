@@ -1,12 +1,12 @@
 // data.js - Versión corregida para usar cliente global de Supabase
 
-// 1. PRIMERO: Usar el cliente global de Supabase
-const supabase = window.supabaseClient;
+// 1. PRIMERO: Usar el cliente global de Supabase con verificación robusta
+const supabase = window.supabaseClient || null;
 
 // Verificar que el cliente esté disponible
 if (!supabase) {
     console.error('❌ Error: Cliente de Supabase no inicializado');
-    // Puedes mostrar un mensaje de error o usar datos locales como respaldo
+    // Usar datos locales como respaldo
 }
 
 // 2. SEGUNDO: Datos del festival (como respaldo local)
@@ -53,19 +53,21 @@ const festivalData = {
             imagen: "img/clubDogo.jpg",
             logo: "logo/dogo.png"
         },
-        {
+         {
             id: 4,
-            nombre: "",
+            nombre: "Mondaman",
             descripcion: "",
             ingredientes: [],
-            negocio: "Amore Mio",
-            direccion: " Calle 20 #8-30, segundo piso",
-            telefono: "3123074609",
-            redes: ["amoremio.rb"],
+            negocio: "Smokin Burguers",
+            direccion: "calle 17 carrera 9 esquina",
+            telefono: "3188465641",
+            redes: ["smokin burguers_planetarica"],
             votos: 0,
-            imagen: "img/.jpg",
-            logo: "logo/Amoremio.png"
+            imagen: "img/smokin1.jpg",
+            logo: "logo/smokin.png"
         },
+        
+       
         {
             id: 5,
             nombre: "",
@@ -248,19 +250,20 @@ const festivalData = {
             imagen: "img/.jpg",
             logo: "logo/sazon.png"
         },
-        {
+         {
             id: 19,
             nombre: "",
             descripcion: "",
             ingredientes: [],
-            negocio: "Smokin Burguers",
-            direccion: "calle 17 carrera 9 esquina",
-            telefono: "3188465641",
-            redes: ["smokin burguers_planetarica"],
+            negocio: "Amore Mio",
+            direccion: " Calle 20 #8-30, segundo piso",
+            telefono: "3123074609",
+            redes: ["amoremio.rb"],
             votos: 0,
             imagen: "img/.jpg",
-            logo: "logo/smokin.png"
-        }
+            logo: "logo/Amoremio.png"
+        },
+
     ],
     comentarios: [],
     ventas: {
