@@ -1,8 +1,14 @@
-// comments.js - Actualizado para usar cliente global de Supabase
+// comments.js - Versión corregida para usar cliente global de Supabase con manejo de errores
 
 // Obtener comentarios desde Supabase
 async function getComments() {
     try {
+        // Verificar que Supabase esté disponible
+        if (!window.supabaseClient) {
+            console.error('❌ Error: Cliente de Supabase no inicializado');
+            return [];
+        }
+
         const { data, error } = await window.supabaseClient
             .from('comments')
             .select('*')
@@ -23,12 +29,19 @@ async function getComments() {
 // Guardar comentario en Supabase
 async function saveComment(nombre, comentario) {
     try {
+        // Verificar que Supabase esté disponible
+        if (!window.supabaseClient) {
+            console.error('❌ Error: Cliente de Supabase no inicializado');
+            return false;
+        }
+
         const { error } = await window.supabaseClient
             .from('comments')
             .insert([
                 { 
-                    nombre: nombre || 'Anónimo', 
-                    comentario: comentario 
+                    name: nombre || 'Anónimo', 
+                    comment: comentario,
+                    created_at: new Date().toISOString()
                 }
             ]);
 
@@ -87,14 +100,14 @@ async function mostrarComentarios() {
             elemento.innerHTML = `
                 <div class="comment-header">
                     <div class="comment-avatar">
-                        ${comentario.nombre ? comentario.nombre.charAt(0).toUpperCase() : 'U'}
+                        ${comentario.name ? comentario.name.charAt(0).toUpperCase() : 'U'}
                     </div>
                     <div class="comment-user-info">
-                        <span class="comment-user">${comentario.nombre || 'Usuario'}</span>
+                        <span class="comment-user">${comentario.name || 'Usuario'}</span>
                         <span class="comment-date">${fechaFormateada}</span>
                     </div>
                 </div>
-                <div class="comment-text">${comentario.comentario}</div>
+                <div class="comment-text">${comentario.comment}</div>
                 <div class="comment-actions">
                     <button class="btn-like" onclick="likeComment(${comentario.id})">
                         <i class="far fa-thumbs-up"></i> Me gusta
@@ -174,8 +187,13 @@ async function agregarComentario() {
 
 // Contador de caracteres
 function actualizarContadorCaracteres() {
-    const texto = document.getElementById('comment-text').value;
+    const textoInput = document.getElementById('comment-text');
+    if (!textoInput) return;
+    
+    const texto = textoInput.value;
     const contador = document.getElementById('char-remaining');
+    if (!contador) return;
+    
     const caracteresRestantes = 500 - texto.length;
     
     contador.textContent = caracteresRestantes;
@@ -190,6 +208,49 @@ function actualizarContadorCaracteres() {
     }
 }
 
+// Función para mostrar notificaciones (si no existe)
+function mostrarNotificacion(mensaje, tipo = 'info') {
+    // Si ya existe una función de notificación, usar esa
+    if (window.mostrarNotificacion && window.mostrarNotificacion !== mostrarNotificacion) {
+        return window.mostrarNotificacion(mensaje, tipo);
+    }
+    
+    // Crear notificación básica
+    const notificacion = document.createElement('div');
+    notificacion.className = `notificacion ${tipo}`;
+    notificacion.textContent = mensaje;
+    notificacion.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        border-radius: 5px;
+        color: white;
+        z-index: 10000;
+        font-weight: bold;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    `;
+    
+    if (tipo === 'error') {
+        notificacion.style.background = '#e74c3c';
+    } else if (tipo === 'success') {
+        notificacion.style.background = '#27ae60';
+    } else if (tipo === 'warning') {
+        notificacion.style.background = '#f39c12';
+    } else {
+        notificacion.style.background = '#3498db';
+    }
+    
+    document.body.appendChild(notificacion);
+    
+    // Auto-eliminar después de 5 segundos
+    setTimeout(() => {
+        if (notificacion.parentNode) {
+            notificacion.parentNode.removeChild(notificacion);
+        }
+    }, 5000);
+}
+
 // Función para dar like a comentarios (opcional)
 async function likeComment(commentId) {
     try {
@@ -201,6 +262,14 @@ async function likeComment(commentId) {
 
 // Inicializar la sección de comentarios
 async function initComments() {
+    // Esperar a que el DOM esté completamente cargado
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(initComments, 100);
+        });
+        return;
+    }
+    
     // Cargar comentarios iniciales
     await mostrarComentarios();
     
@@ -264,9 +333,15 @@ async function cargarMasComentarios() {
 window.agregarComentario = agregarComentario;
 window.likeComment = likeComment;
 window.cargarMasComentarios = cargarMasComentarios;
+window.mostrarComentarios = mostrarComentarios;
 
 // Inicializar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', function() {
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('✅ comments.js inicializado - Usando cliente global de Supabase');
+        initComments();
+    });
+} else {
     console.log('✅ comments.js inicializado - Usando cliente global de Supabase');
     initComments();
-});
+}
